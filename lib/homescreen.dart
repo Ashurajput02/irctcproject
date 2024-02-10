@@ -12,7 +12,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  TextEditingController _name = TextEditingController();
+  final TextEditingController _name = TextEditingController();
 
   bool receiving = true;
 
@@ -24,23 +24,25 @@ class _HomeScreenState extends State<HomeScreen> {
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          gradient: LinearGradient(
+          gradient: const LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
-            colors: [Color(0xff302d7d), Color(0x00ffffff)],
+            colors: [
+              Color.fromARGB(255, 216, 77, 38),
+              Color.fromARGB(0, 230, 2, 2)
+            ],
           ),
         ),
         child: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 73,
             ),
             Image.asset(
-              "assets/images/irctc.png",
-              width: 100,
-              height: 122,
+              "assets/images/Indian-Railway.jpg",
+              width: double.infinity,
             ),
-            SizedBox(
+            const SizedBox(
               height: 31,
             ),
             Expanded(
@@ -48,14 +50,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: 343,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
-                  color: Color(0xccffffff),
+                  color: const Color(0xccffffff),
                 ),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 48),
-                      Padding(
+                      const SizedBox(height: 48),
+                      const Padding(
                         padding: EdgeInsets.only(left: 18),
                         child: Text(
                           "Sleeper Number:",
@@ -67,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 15, right: 15),
+                        padding: const EdgeInsets.only(left: 15, right: 15),
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10.0),
@@ -76,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: TextFormField(
                             controller: _name,
                             textAlign: TextAlign.left,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               hintText: '',
                               border: OutlineInputBorder(),
                             ),
@@ -89,16 +91,17 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Padding(
-                        padding: EdgeInsets.only(left: 10),
+                        padding: const EdgeInsets.only(left: 10),
                         child: Center(
                           child: Container(
                             width: 140,
                             child: DecoratedBox(
                               decoration: BoxDecoration(
-                                gradient: LinearGradient(colors: [
-                                  Color(0xff302d7d), Color(0xff5c5a93)
+                                gradient: const LinearGradient(colors: [
+                                  Color.fromARGB(255, 234, 84, 38),
+                                  Color.fromARGB(255, 241, 56, 36)
                                   //add more colors
                                 ]),
                                 borderRadius: BorderRadius.circular(5),
@@ -116,15 +119,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                       receiving = true;
                                     });
                                   },
-                                  child: Text("START")),
+                                  child: const Text("START")),
                             ),
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 16,
                       ),
-                      Center(
+                      const Center(
                         child: Text(
                           "Distance :",
                           style: TextStyle(
@@ -135,7 +138,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Center(
                         child: Padding(
-                          padding: EdgeInsets.only(left: 10, right: 10),
+                          padding: const EdgeInsets.only(left: 10, right: 10),
                           child: Container(
                             height: 99,
                             color: CupertinoColors.systemGrey4,
@@ -150,10 +153,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 16,
                       ),
-                      Center(
+                      const Center(
                         child: Text(
                           "Gauge :",
                           style: TextStyle(
@@ -164,7 +167,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Center(
                         child: Padding(
-                          padding: EdgeInsets.only(left: 15, right: 15),
+                          padding: const EdgeInsets.only(left: 15, right: 15),
                           child: Container(
                             height: 99,
                             color: CupertinoColors.systemGrey4,
@@ -179,10 +182,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 16,
                       ),
-                      Center(
+                      const Center(
                         child: Text(
                           "Elevation :",
                           style: TextStyle(
@@ -193,7 +196,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Center(
                         child: Padding(
-                          padding: EdgeInsets.only(left: 10, right: 10),
+                          padding: const EdgeInsets.only(left: 10, right: 10),
                           child: Container(
                             height: 99,
                             color: CupertinoColors.systemGrey4,
@@ -213,20 +216,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Padding(
-              padding: EdgeInsets.only(left: 10),
+              padding: const EdgeInsets.only(left: 10),
               child: Center(
                 child: Container(
                   width: 140,
                   child: DecoratedBox(
                     decoration: BoxDecoration(
-                        gradient: LinearGradient(colors: [
-                          Color(0xff302d7d), Color(0xff5c5a93)
+                        gradient: const LinearGradient(colors: [
+                          Color.fromARGB(255, 200, 10, 19),
+                          Color.fromARGB(255, 249, 66, 66)
                           //add more colors
                         ]),
                         borderRadius: BorderRadius.circular(5),
-                        boxShadow: <BoxShadow>[
+                        boxShadow: const <BoxShadow>[
                           BoxShadow(
                               color: Color.fromRGBO(
                                   0, 0, 0, 0.57), //shadow for button
@@ -251,7 +255,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           );
                         },
-                        child: Text("STOP")),
+                        child: const Text("STOP")),
                   ),
                 ),
               ),
