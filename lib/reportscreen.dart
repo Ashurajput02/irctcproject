@@ -15,10 +15,10 @@ class Report extends StatelessWidget {
               alignment: Alignment.center,
               children: [
                 Image.asset(
-                  "assets/images/irctc.png",
+                  "assets/images/indianrailways.png",
                   width: 199,
                   height: 243,
-                  color: Color.fromRGBO(255, 255, 255, 0.8), // Adjust the opacity (0.0 to 1.0)
+                  color: Color.fromRGBO(255, 255, 255, 0.19), // Adjust the opacity (0.0 to 1.0)
                   colorBlendMode: BlendMode.modulate,
                 ),
 
@@ -28,7 +28,7 @@ class Report extends StatelessWidget {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         // primary: Colors.transparent,
-                        elevation: 1,
+                        elevation: 3,
                         backgroundColor:Colors.deepOrange,
                       ),
                       onPressed: () {

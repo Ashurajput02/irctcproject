@@ -23,7 +23,7 @@ class _splashscreenfinalState extends State<splashscreenfinal> {
         color: Colors.white,
         child: Align(
           alignment:Alignment.center,
-          child:Image.asset("assets/images/irctc.png")
+          child:Image.asset("assets/images/indianrailways.png",width: 233,height: 233,)
             ,
           ),
         ),
