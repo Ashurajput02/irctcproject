@@ -97,27 +97,26 @@ class _HomeScreenState extends State<HomeScreen> {
                             width: 140,
                             child: DecoratedBox(
                               decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                      colors: [
-                                        Color(0xff302d7d), Color(0xff5c5a93)
-                                        //add more colors
-                                      ]),
-                                  borderRadius: BorderRadius.circular(5),
-
+                                gradient: LinearGradient(colors: [
+                                  Color(0xff302d7d), Color(0xff5c5a93)
+                                  //add more colors
+                                ]),
+                                borderRadius: BorderRadius.circular(5),
                               ),
-                              child:ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  primary: Colors.transparent,
-                                  onSurface: Colors.transparent,
-                                  shadowColor: Colors.transparent,
-                                  //make color or elevated button transparent
-                                ),
-                              onPressed: () async {
-                                print("Start Button Pressed");
-                                setState(() {
-                                  receiving = true;
-                                });
-                              }, child: Text("START")),
+                              child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Colors.transparent,
+                                    onSurface: Colors.transparent,
+                                    shadowColor: Colors.transparent,
+                                    //make color or elevated button transparent
+                                  ),
+                                  onPressed: () async {
+                                    print("Start Button Pressed");
+                                    setState(() {
+                                      receiving = true;
+                                    });
+                                  },
+                                  child: Text("START")),
                             ),
                           ),
                         ),
@@ -165,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Center(
                         child: Padding(
-                          padding: EdgeInsets.only(left: 10, right: 10),
+                          padding: EdgeInsets.only(left: 15, right: 15),
                           child: Container(
                             height: 99,
                             color: CupertinoColors.systemGrey4,
@@ -222,37 +221,37 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: 140,
                   child: DecoratedBox(
                     decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            colors: [
-                              Color(0xff302d7d), Color(0xff5c5a93)
-                              //add more colors
-                            ]),
+                        gradient: LinearGradient(colors: [
+                          Color(0xff302d7d), Color(0xff5c5a93)
+                          //add more colors
+                        ]),
                         borderRadius: BorderRadius.circular(5),
                         boxShadow: <BoxShadow>[
                           BoxShadow(
-                              color: Color.fromRGBO(0, 0, 0, 0.57), //shadow for button
+                              color: Color.fromRGBO(
+                                  0, 0, 0, 0.57), //shadow for button
                               blurRadius: 5) //blur radius of shadow
-                        ]
-                    ),
-                    child:ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.transparent,
-                        onSurface: Colors.transparent,
-                        shadowColor: Colors.transparent,
-                        //make color or elevated button transparent
-                      ),
-                    onPressed: () async {
-                      print("Start Button Pressed");
-                      setState(() {
-                        receiving = true;
-                      });
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Report(),
+                        ]),
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.transparent,
+                          onSurface: Colors.transparent,
+                          shadowColor: Colors.transparent,
+                          //make color or elevated button transparent
                         ),
-                      );
-                    }, child: Text("STOP")),
+                        onPressed: () async {
+                          print("Start Button Pressed");
+                          setState(() {
+                            receiving = true;
+                          });
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Report(),
+                            ),
+                          );
+                        },
+                        child: Text("STOP")),
                   ),
                 ),
               ),
