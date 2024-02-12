@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:railways1/bluetooth.dart';
 
 class splashscreenfinal extends StatefulWidget {
   @override
@@ -12,8 +13,9 @@ class _splashscreenfinalState extends State<splashscreenfinal> {
   @override
   void initState() {
     super.initState();
+    Bluetooth.requestPermissions();
     Timer(Duration(seconds: 5), () {
-      Navigator.of(context).pushReplacementNamed('/HomeScreen');
+      Navigator.of(context).pushReplacementNamed('/BluetoothScreen');
     });
   }
 
@@ -21,10 +23,10 @@ class _splashscreenfinalState extends State<splashscreenfinal> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.white,
+        color: Color.fromARGB(255, 255, 255, 255),
         child: Align(
           alignment: Alignment.center,
-          child: Image.asset("assets/images/download.jpg"),
+          child: Image.asset("assets/images/raillogo.png"),
         ),
       ),
     );

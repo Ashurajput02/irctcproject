@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:railways1/blue.dart';
 import 'package:railways1/homescreen.dart';
 import 'package:railways1/splashscreen.dart';
 
@@ -14,6 +15,7 @@ class myapp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         routes: {
           '/HomeScreen': (context) => HomeScreen(),
+          '/BluetoothScreen': (context) => BluetoothPage(),
         });
   }
 }
