@@ -11,10 +11,9 @@ class Bluetooth {
   static List<double> receivedDataList = [];
   static List<BluetoothDiscoveryResult> devices = [];
   static StreamSubscription<BluetoothDiscoveryResult>? streamSubscription;
-
   static List<BluetoothDevice> devicesList = [];
+  static List<String> answers = [];
 
-  
   static Future<void> startDiscovery() async {
     try {
       FlutterBluetoothSerial.instance.startDiscovery();
@@ -40,6 +39,7 @@ class Bluetooth {
       await connection!.output.allSent;
       isConnected = true;
       print('Connected to Device');
+      startListening();
 
       // connection!.input!.listen((Uint8List data) {
       //   // Concatenate the received data
@@ -94,22 +94,32 @@ class Bluetooth {
     }
   }
 
-  static String startListening() {
-    String receivedData = '';
+  static List<int> startListening() {
+    List<int> values = [];
     connection!.input!.listen(
       (Uint8List data) {
-        receivedData = String.fromCharCodes(data);
-        print('Received: $receivedData');
-        // Handle your received data here
-      },
+        if (data.length >= 4) {
+          String rec = String.fromCharCodes(data);
+          print("rec: ${rec}");
+          List<String> lines = rec.split('\n');
 
-      // Handle Bluetooth connection closed event
+          if (lines.length >= 3) {
+            values[0] = int.tryParse(lines[0]) ?? 0;
+            values[1] = int.tryParse(lines[1]) ?? 0;
+            values[2] = int.tryParse(lines[2]) ?? 0;
+
+            print('Value 1: ${values[0]}');
+            print('Value 2: ${values[1]}');
+            print('Value 3: ${values[2]}');
+          }
+        }
+      },
       onDone: () {
         print('Connection closed');
         connection = null;
       },
     );
-    return receivedData;
+    return values;
   }
 
   static void stopBluetooth() {

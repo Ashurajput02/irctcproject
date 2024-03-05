@@ -3,7 +3,7 @@ import 'package:railways1/blue.dart';
 import 'package:railways1/splashscreen.dart';
 
 void main() {
-  runApp(myapp());
+  runApp(const myapp());
 }
 
 class myapp extends StatelessWidget {
@@ -16,7 +16,7 @@ class myapp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         routes: {
           // '/HomeScreen': (context) => HomeScreen(),
-          '/BluetoothScreen': (context) => BluetoothPage(),
+          '/BluetoothScreen': (context) => const BluetoothPage(),
         });
   }
 }

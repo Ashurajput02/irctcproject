@@ -14,7 +14,7 @@ class BluetoothPage extends StatefulWidget {
 
 class _BluetoothPageState extends State<BluetoothPage> {
   List<BluetoothDevice> _devicesList = [];
-  bool _isDiscovering = false;
+  var isDiscovering = false;
   Timer? _stopScanTimer;
 
   @override
@@ -26,7 +26,7 @@ class _BluetoothPageState extends State<BluetoothPage> {
   Future<void> _startDiscovery() async {
     try {
       setState(() {
-        _isDiscovering = true;
+        isDiscovering = true;
         _devicesList
             .clear(); // Clear the previous list before starting new discovery
       });
@@ -40,13 +40,17 @@ class _BluetoothPageState extends State<BluetoothPage> {
         .listen((BluetoothDiscoveryResult state) {
       setState(() {
         _devicesList.add(state.device);
+        isDiscovering = true;
       });
     });
 
     // Schedule stop scan after 5 seconds
     _stopScanTimer = Timer(const Duration(seconds: 5), () {
-      if (_isDiscovering) {
+      if (isDiscovering) {
         _stopDiscovery();
+        setState(() {
+          isDiscovering = false;
+        });
       }
     });
   }
@@ -54,23 +58,45 @@ class _BluetoothPageState extends State<BluetoothPage> {
   void _stopDiscovery() {
     FlutterBluetoothSerial.instance.cancelDiscovery();
     setState(() {
-      _isDiscovering = false;
+      isDiscovering = false;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    TextStyle textStyle = TextStyle(
+      color: isDiscovering == false ? Colors.white : Colors.grey,
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Bluetooth Devices'),
         actions: [
-          ElevatedButton(
-            onPressed: _isDiscovering ? null : _startDiscovery,
-            child: const Text(
+          TextButton(
+            onPressed: () {
+              isDiscovering ? null : _startDiscovery();
+            },
+            child: Text(
               "Refresh",
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(
+                color: isDiscovering == false
+                    ? Colors.white
+                    : Color.fromARGB(255, 204, 204, 204),
+              ),
             ),
           ),
+          TextButton(
+            onPressed: () {
+              Bluetooth.stopBluetooth();
+            },
+            child: Text(
+              "Disconnect",
+              style: TextStyle(
+                  color: Bluetooth.isConnected
+                      ? Colors.white
+                      : Color.fromARGB(255, 208, 207, 207)),
+            ),
+          )
         ],
       ),
       body: SingleChildScrollView(
@@ -91,9 +117,19 @@ class _BluetoothPageState extends State<BluetoothPage> {
                     return ListTile(
                       title: Text(device.name ?? "Unknown"),
                       subtitle: Text(device.address),
+                      // trailing: Text(
+                      //   'RSSI: ${device.type}',
+                      //   style: const TextStyle(
+                      //     fontSize: 14,
+                      //     fontWeight: FontWeight.bold,
+                      //   ),
+                      // ),
                       splashColor: const Color.fromARGB(255, 8, 130, 229),
                       onTap: () async {
-                        // await Bluetooth.connectToDevice(device.address);
+                        if (!Bluetooth.isConnected) {
+                          // await Bluetooth.connectToDevice(device.address);
+                          await BluetoothConnection.toAddress(device.address);
+                        }
                         await Navigator.push(
                             context,
                             MaterialPageRoute(
