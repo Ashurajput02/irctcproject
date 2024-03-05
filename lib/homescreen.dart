@@ -1,20 +1,57 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:railways1/bluetooth.dart';
 import 'package:railways1/reportscreen.dart';
 
 class HomeScreen extends StatefulWidget {
+  String address = '';
+  HomeScreen(this.address);
   @override
   State<StatefulWidget> createState() {
-    return _HomeScreenState();
+    return _HomeScreenState(address);
   }
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String address = '';
+  _HomeScreenState(this.address);
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _name = TextEditingController();
 
   bool receiving = true;
+
+  List<int> _receivedData = [];
+
+  void readDataForDuration() {
+    _receivedData.clear();
+    {
+      // Timer(Duration(seconds: 10), () {
+      //   Bluetooth.connection?.finish(); // Finish connection after 10 seconds
+      // });
+
+      Timer.periodic(Duration(seconds: 1), (timer) {
+        if (!Bluetooth.connection!.isConnected) {
+          timer.cancel(); // Stop timer if connection is lost
+          return;
+        }
+        Bluetooth.connection!.input!.listen((data) {
+          _receivedData.addAll(data); // Add received data to the list
+          _parseReceivedData(); // Process received data
+        });
+      });
+    }
+  }
+
+  void _parseReceivedData() {
+    // Assuming you want to process the received data here
+    // Example: print received data
+    List<int> integers = _receivedData.map((byte) => byte.toInt()).toList();
+    print("received data int: ${integers.toList()}");
+    print("received data: ${_receivedData.toList()}");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -115,6 +152,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   onPressed: () async {
                                     print("Start Button Pressed");
+                                    // if (Bluetooth.isConnected == false) {
+                                    //   await Bluetooth.connectToDevice(address);
+                                    // }
+                                    readDataForDuration();
                                     setState(() {
                                       receiving = true;
                                     });

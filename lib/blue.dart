@@ -2,9 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
-import 'bluetooth.dart';
+import 'package:railways1/bluetooth.dart';
+import 'package:railways1/homescreen.dart';
 
 class BluetoothPage extends StatefulWidget {
+  const BluetoothPage({super.key});
+
   @override
   _BluetoothPageState createState() => _BluetoothPageState();
 }
@@ -17,6 +20,7 @@ class _BluetoothPageState extends State<BluetoothPage> {
   @override
   void initState() {
     super.initState();
+    _startDiscovery();
   }
 
   Future<void> _startDiscovery() async {
@@ -73,9 +77,9 @@ class _BluetoothPageState extends State<BluetoothPage> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(8, 16, 8, 0),
+              padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
               child: Container(
-                height: MediaQuery.of(context).size.height / 1.5,
+                height: MediaQuery.of(context).size.height / 1.2,
                 decoration: BoxDecoration(
                   color: const Color.fromARGB(143, 73, 231, 246),
                   borderRadius: BorderRadius.circular(10),
@@ -87,8 +91,14 @@ class _BluetoothPageState extends State<BluetoothPage> {
                     return ListTile(
                       title: Text(device.name ?? "Unknown"),
                       subtitle: Text(device.address),
+                      splashColor: const Color.fromARGB(255, 8, 130, 229),
                       onTap: () async {
-                        await Bluetooth.connectToDevice(device.address);
+                        // await Bluetooth.connectToDevice(device.address);
+                        await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    HomeScreen(device.address)));
                         // await BluetoothConnection.toAddress(device.address);
                       },
                     );

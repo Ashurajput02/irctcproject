@@ -14,6 +14,7 @@ class Bluetooth {
 
   static List<BluetoothDevice> devicesList = [];
 
+  
   static Future<void> startDiscovery() async {
     try {
       FlutterBluetoothSerial.instance.startDiscovery();
@@ -32,7 +33,6 @@ class Bluetooth {
     Bluetooth.connection = await BluetoothConnection.toAddress(address);
     String pass = '1234';
     pass = pass.trim();
-    String receivedData = '';
     try {
       List<int> list = pass.codeUnits;
       Uint8List bytes = Uint8List.fromList(list);
@@ -41,34 +41,34 @@ class Bluetooth {
       isConnected = true;
       print('Connected to Device');
 
-      connection!.input!.listen((Uint8List data) {
-        // Concatenate the received data
-        receivedData += String.fromCharCodes(data);
+      // connection!.input!.listen((Uint8List data) {
+      //   // Concatenate the received data
+      //   receivedData += String.fromCharCodes(data);
 
-        // Check if the complete message is received
-        if (receivedData.endsWith('\n')) {
-          receivedData = receivedData.trim();
+      //   // Check if the complete message is received
+      //   if (receivedData.endsWith('\n')) {
+      //     receivedData = receivedData.trim();
 
-          try {
-            print('Received Data: $receivedData');
-            double parsedData = int.parse(receivedData.trim()) / 10;
-            receivedDataList.add(parsedData);
-            print("parsed hehe: $parsedData");
-            print('Received Data packet: ${data.join(', ')}');
-            print(receivedDataList);
-            // Reset receivedData for the next message
-            receivedData = '';
-          } catch (e) {
-            print('Error parsing data: $receivedData');
-            // Handle the error as needed
-          }
+      //     try {
+      //       print('Received Data: $receivedData');
+      //       double parsedData = int.parse(receivedData.trim()) / 10;
+      //       receivedDataList.add(parsedData);
+      //       print("parsed hehe: $parsedData");
+      //       print('Received Data packet: ${data.join(', ')}');
+      //       print(receivedDataList);
+      //       // Reset receivedData for the next message
+      //       receivedData = '';
+      //     } catch (e) {
+      //       print('Error parsing data: $receivedData');
+      //       // Handle the error as needed
+      //     }
 
-          // Reset receivedData for the next message
-          receivedData = '';
-        }
-      }, onDone: () {
-        isConnected = false;
-      });
+      // Reset receivedData for the next message
+      // receivedData = '';
+      // }
+      // }, onDone: () {
+      //   isConnected = false;
+      // });
     } catch (exception, stackTrace) {
       print('Cannot connect, exception occurred: $exception');
       print('StackTrace: $stackTrace');
