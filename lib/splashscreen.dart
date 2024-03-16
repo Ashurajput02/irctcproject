@@ -25,8 +25,15 @@ class _splashscreenfinalState extends State<splashscreenfinal> {
       body: Container(
         color: Color.fromARGB(255, 255, 255, 255),
         child: Align(
+
           alignment: Alignment.center,
-          child: Image.asset("assets/images/raillogo.png"),
+          child: Image.asset("assets/images/indianrailways.png"),
+
+          alignment:Alignment.center,
+          child:Image.asset("assets/images/indianrailways.png",width: 233,height: 233,)
+            ,
+          ),
+
         ),
       ),
     );

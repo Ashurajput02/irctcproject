@@ -47,9 +47,35 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(
               height: 73,
             ),
+
             Image.asset(
-              "assets/images/Indian-Railway.jpg",
+              "assets/images/indianrailways.png",
               width: double.infinity,
+
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(9),
+                    border: Border.all(color: Colors.black, width: 2.0), // Border for the entire container
+                  ),
+                  child: Image.asset(
+                    "assets/images/indianrailways.png",
+                    width: 100,
+                    height: 122,
+                  ),
+                ),
+                Container(
+                  width: 104,
+                  height: 128,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(9),
+                    border: Border.all(color: Colors.black, width: 2.0), // Border for the logo
+                  ),
+                ),
+              ],
+
             ),
             const SizedBox(
               height: 31,
