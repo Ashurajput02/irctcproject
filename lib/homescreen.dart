@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _name = TextEditingController();
 
   bool receiving = true;
-  List<int> receivedData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  List<int> receivedData = Bluetooth.startListening();
 
   DatabaseHelper db = DatabaseHelper();
 
