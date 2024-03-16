@@ -21,8 +21,9 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _name = TextEditingController();
 
   bool receiving = true;
-  List<int> receivedData = Bluetooth.startListening();
-
+  late List<int>
+      receivedData; // startlistening() stores a list of three values coming from bluetooth: in three integers and returns three nos. as list
+  // update the widgets using the list
   DatabaseHelper db = DatabaseHelper();
 
   @override
@@ -47,35 +48,9 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(
               height: 73,
             ),
-
             Image.asset(
-              "assets/images/indianrailways.png",
+              "assets/images/Indian-Railway.jpg",
               width: double.infinity,
-
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(9),
-                    border: Border.all(color: Colors.black, width: 2.0), // Border for the entire container
-                  ),
-                  child: Image.asset(
-                    "assets/images/indianrailways.png",
-                    width: 100,
-                    height: 122,
-                  ),
-                ),
-                Container(
-                  width: 104,
-                  height: 128,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(9),
-                    border: Border.all(color: Colors.black, width: 2.0), // Border for the logo
-                  ),
-                ),
-              ],
-
             ),
             const SizedBox(
               height: 31,
@@ -152,6 +127,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     print("Start Button Pressed");
                                     List<int> values =
                                         Bluetooth.startListening();
+                                    // startlistening() stores a list of three values coming from
+                                    // bluetooth: in three integers and returns three nos. as list
+                                    // update the widgets using the list
                                     receivedData.addAll(values);
                                     db.insertUserData(
                                         distance: values[0],
@@ -188,12 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               itemCount: 10,
                               itemBuilder: (context, index) {
                                 return ListTile(
-                                  title: Text((receivedData[
-                                              receivedData.length -
-                                                  index -
-                                                  3] ??
-                                          0)
-                                      .toString()),
+                                  title: Text("distance $index"),
                                 );
                               },
                             ),
@@ -222,12 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               itemCount: 10,
                               itemBuilder: (context, index) {
                                 return ListTile(
-                                  title: Text((receivedData[
-                                              receivedData.length -
-                                                  index -
-                                                  2] ??
-                                          0)
-                                      .toString()),
+                                  title: Text("gauge $index"),
                                 );
                               },
                             ),
@@ -256,12 +224,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               itemCount: 10,
                               itemBuilder: (context, index) {
                                 return ListTile(
-                                  title: Text((receivedData[
-                                              receivedData.length -
-                                                  index -
-                                                  1] ??
-                                          0)
-                                      .toString()),
+                                  title: Text("elevation $index"),
                                 );
                               },
                             ),
