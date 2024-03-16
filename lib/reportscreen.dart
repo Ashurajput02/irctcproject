@@ -17,9 +17,8 @@ class Report extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-
             Image.asset(
-              "assets/images/indianrailways.png",
+              "assets/images/raillogo.png",
               width: 199,
               height: 243,
               color: const Color.fromRGBO(
@@ -46,40 +45,6 @@ class Report extends StatelessWidget {
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 19,
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                Image.asset(
-                  "assets/images/indianrailways.png",
-                  width: 199,
-                  height: 243,
-                  color: Color.fromRGBO(255, 255, 255, 0.19), // Adjust the opacity (0.0 to 1.0)
-                  colorBlendMode: BlendMode.modulate,
-                ),
-
-                Center(
-                  child: Positioned(
-                    top: 0,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        // primary: Colors.transparent,
-                        elevation: 3,
-                        backgroundColor:Colors.deepOrange,
-                      ),
-                      onPressed: () {
-                        // Add your functionality for the button here
-                        print("Generate Report Button Pressed");
-                      },
-                      child: Text(
-                        "Generate Report",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ),
-
                 ),
               ),
             ),
