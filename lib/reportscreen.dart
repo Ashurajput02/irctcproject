@@ -11,45 +11,44 @@ class Report extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Image.asset(
-              "assets/images/raillogo.png",
-              width: 199,
-              height: 243,
-              color: const Color.fromRGBO(
-                  255, 255, 255, 0.8), // Adjust the opacity (0.0 to 1.0)
-              colorBlendMode: BlendMode.modulate,
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
+      body: Stack(
+        alignment: Alignment.center,
+        children: [
+          Image.asset(
+            "assets/images/indianrailways.png",
+            width: 199,
+            height: 243,
+            color: Color.fromRGBO(
+                255, 255, 255, 0.19), // Adjust the opacity (0.0 to 1.0)
+            colorBlendMode: BlendMode.modulate,
+          ),
+          Center(
+            child: Positioned(
+              top: 0,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
                   // primary: Colors.transparent,
-                  elevation: 1,
+                  elevation: 3,
                   backgroundColor: Colors.deepOrange,
-                  fixedSize: const Size(170, 65),
-                  shape: ContinuousRectangleBorder(
-                      borderRadius: BorderRadius.circular(25))),
-              onPressed: () async {
-                await _generateAndDownloadCSV(context);
-                // Add your functionality for the button here
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => DatabaseTable()));
-                print("Generate Report Button Pressed");
-              },
-              child: const Text(
-                "Generate Report",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 19,
+                ),
+                onPressed: () async {
+                  await _generateAndDownloadCSV(context);
+                  // Add your functionality for the button here
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => DatabaseTable()));
+                  print("Generate Report Button Pressed");
+                },
+                child: const Text(
+                  "Generate Report",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 19,
+                  ),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

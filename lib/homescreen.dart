@@ -1,3 +1,598 @@
+// // import 'dart:async';
+
+// // import 'package:flutter/cupertino.dart';
+// // import 'package:flutter/material.dart';
+// // import 'package:railways1/bluetooth.dart';
+// // import 'package:railways1/db.dart';
+// // import 'package:railways1/reportscreen.dart';
+
+// // class HomeScreen extends StatefulWidget {
+// //   String address = '';
+// //   HomeScreen(this.address);
+// //   @override
+// //   State<StatefulWidget> createState() {
+// //     return _HomeScreenState();
+// //   }
+// // }
+
+// // class _HomeScreenState extends State<HomeScreen> {
+// //   final _formKey = GlobalKey<FormState>();
+
+// //   final TextEditingController _name = TextEditingController();
+
+// //   bool receiving = true;
+// //   late List<int>
+// //       receivedData; // startlistening() stores a list of three values coming from bluetooth: in three integers and returns three nos. as list
+// //   // update the widgets using the list
+// //   DatabaseHelper db = DatabaseHelper();
+
+// //   @override
+// //   Widget build(BuildContext context) {
+// //     return Scaffold(
+// //       body: Container(
+// //         width: MediaQuery.of(context).size.width,
+// //         height: MediaQuery.of(context).size.height,
+// //         decoration: BoxDecoration(
+// //           borderRadius: BorderRadius.circular(8),
+// //           gradient: const LinearGradient(
+// //             begin: Alignment.topRight,
+// //             end: Alignment.bottomLeft,
+// //             colors: [
+// //               Color.fromARGB(255, 216, 77, 38),
+// //               Color.fromARGB(0, 230, 2, 2)
+// //             ],
+// //           ),
+// //         ),
+// //         child: Column(
+// //           children: [
+// //             const SizedBox(
+// //               height: 73,
+// //             ),
+// //             Image.asset(
+// //               "assets/images/raillogo.png",
+// //               width: 127,
+// //               //width: 32,
+// //             ),
+// //             const SizedBox(
+// //               height: 31,
+// //             ),
+// //             Expanded(
+// //               child: Container(
+// //                 width: 343,
+// //                 decoration: BoxDecoration(
+// //                   borderRadius: BorderRadius.circular(8),
+// //                   color: const Color(0xccffffff),
+// //                 ),
+// //                 child: SingleChildScrollView(
+// //                   child: Column(
+// //                     crossAxisAlignment: CrossAxisAlignment.start,
+// //                     children: [
+// //                       const SizedBox(height: 48),
+// //                       const Padding(
+// //                         padding: EdgeInsets.only(left: 18),
+// //                         child: Text(
+// //                           "Sleeper Number:",
+// //                           style: TextStyle(
+// //                             fontSize: 20,
+// //                             fontWeight: FontWeight.bold,
+// //                             fontFamily: 'Urbanist',
+// //                           ),
+// //                         ),
+// //                       ),
+// //                       Padding(
+// //                         padding: const EdgeInsets.only(left: 15, right: 15),
+// //                         child: Container(
+// //                           decoration: BoxDecoration(
+// //                             borderRadius: BorderRadius.circular(10.0),
+// //                             border: Border.all(),
+// //                           ),
+// //                           child: TextFormField(
+// //                             controller: _name,
+// //                             textAlign: TextAlign.left,
+// //                             decoration: const InputDecoration(
+// //                               hintText: '',
+// //                               border: OutlineInputBorder(),
+// //                             ),
+// //                             validator: (value) {
+// //                               if (value == null || value.isEmpty) {
+// //                                 return 'Please enter a sleeper number';
+// //                               }
+// //                               return null;
+// //                             },
+// //                           ),
+// //                         ),
+// //                       ),
+// //                       const SizedBox(height: 10),
+// //                       Padding(
+// //                         padding: const EdgeInsets.only(left: 10),
+// //                         child: Center(
+// //                           child: Container(
+// //                             width: 140,
+// //                             child: DecoratedBox(
+// //                               decoration: BoxDecoration(
+// //                                 gradient: const LinearGradient(colors: [
+// //                                   Color.fromARGB(255, 234, 84, 38),
+// //                                   Color.fromARGB(255, 241, 56, 36)
+// //                                   //add more colors
+// //                                 ]),
+// //                                 borderRadius: BorderRadius.circular(5),
+// //                               ),
+// //                               child: ElevatedButton(
+// //                                   style: ElevatedButton.styleFrom(
+// //                                     backgroundColor: Colors.transparent,
+// //                                     disabledForegroundColor:
+// //                                         Colors.transparent.withOpacity(0.38),
+// //                                     disabledBackgroundColor:
+// //                                         Colors.transparent.withOpacity(0.12),
+// //                                     shadowColor: Colors.transparent,
+// //                                     //make color or elevated button transparent
+// //                                   ),
+// //                                   onPressed: () async {
+// //                                     print("Start Button Pressed");
+// //                                     List<int> values =
+// //                                         Bluetooth.startListening();
+// //                                     // startlistening() stores a list of three values coming from
+// //                                     // bluetooth: in three integers and returns three nos. as list
+// //                                     // update the widgets using the list
+// //                                     receivedData.addAll(values);
+// //                                     db.insertUserData(
+// //                                         distance: values[0],
+// //                                         gauge: values[1],
+// //                                         elevation: values[2]);
+// //                                     setState(() {
+// //                                       receiving = true;
+// //                                     });
+// //                                   },
+// //                                   child: const Text("START")),
+// //                             ),
+// //                           ),
+// //                         ),
+// //                       ),
+// //                       const SizedBox(
+// //                         height: 16,
+// //                       ),
+// //                       const Center(
+// //                         child: Text(
+// //                           "Distance :",
+// //                           style: TextStyle(
+// //                             fontSize: 14,
+// //                             fontWeight: FontWeight.w700,
+// //                           ),
+// //                         ),
+// //                       ),
+// //                       Center(
+// //                         child: Padding(
+// //                           padding: const EdgeInsets.only(left: 10, right: 10),
+// //                           child: Container(
+// //                             height: 99,
+// //                             color: CupertinoColors.systemGrey4,
+// //                             child: ListView.builder(
+// //                               itemCount: 10,
+// //                               itemBuilder: (context, index) {
+// //                                 return ListTile(
+// //                                   title: Text("distance $index"),
+// //                                 );
+// //                               },
+// //                             ),
+// //                           ),
+// //                         ),
+// //                       ),
+// //                       const SizedBox(
+// //                         height: 16,
+// //                       ),
+// //                       const Center(
+// //                         child: Text(
+// //                           "Gauge :",
+// //                           style: TextStyle(
+// //                             fontSize: 14,
+// //                             fontWeight: FontWeight.w700,
+// //                           ),
+// //                         ),
+// //                       ),
+// //                       Center(
+// //                         child: Padding(
+// //                           padding: const EdgeInsets.only(left: 15, right: 15),
+// //                           child: Container(
+// //                             height: 99,
+// //                             color: CupertinoColors.systemGrey4,
+// //                             child: ListView.builder(
+// //                               itemCount: 10,
+// //                               itemBuilder: (context, index) {
+// //                                 return ListTile(
+// //                                   title: Text("gauge $index"),
+// //                                 );
+// //                               },
+// //                             ),
+// //                           ),
+// //                         ),
+// //                       ),
+// //                       const SizedBox(
+// //                         height: 16,
+// //                       ),
+// //                       const Center(
+// //                         child: Text(
+// //                           "Elevation :",
+// //                           style: TextStyle(
+// //                             fontSize: 14,
+// //                             fontWeight: FontWeight.w700,
+// //                           ),
+// //                         ),
+// //                       ),
+// //                       Center(
+// //                         child: Padding(
+// //                           padding: const EdgeInsets.only(left: 10, right: 10),
+// //                           child: Container(
+// //                             height: 99,
+// //                             color: CupertinoColors.systemGrey4,
+// //                             child: ListView.builder(
+// //                               itemCount: 10,
+// //                               itemBuilder: (context, index) {
+// //                                 return ListTile(
+// //                                   title: Text("elevation $index"),
+// //                                 );
+// //                               },
+// //                             ),
+// //                           ),
+// //                         ),
+// //                       ),
+// //                     ],
+// //                   ),
+// //                 ),
+// //               ),
+// //             ),
+// //             const SizedBox(height: 10),
+// //             Padding(
+// //               padding: const EdgeInsets.only(left: 10),
+// //               child: Center(
+// //                 child: Container(
+// //                   width: 140,
+// //                   child: DecoratedBox(
+// //                     decoration: BoxDecoration(
+// //                         gradient: const LinearGradient(colors: [
+// //                           Color.fromARGB(255, 200, 10, 19),
+// //                           Color.fromARGB(255, 249, 66, 66)
+// //                           //add more colors
+// //                         ]),
+// //                         borderRadius: BorderRadius.circular(5),
+// //                         boxShadow: const <BoxShadow>[
+// //                           BoxShadow(
+// //                               color: Color.fromRGBO(
+// //                                   0, 0, 0, 0.57), //shadow for button
+// //                               blurRadius: 5) //blur radius of shadow
+// //                         ]),
+// //                     child: ElevatedButton(
+// //                         style: ElevatedButton.styleFrom(
+// //                           backgroundColor: Colors.transparent,
+// //                           disabledForegroundColor:
+// //                               Colors.transparent.withOpacity(0.38),
+// //                           disabledBackgroundColor:
+// //                               Colors.transparent.withOpacity(0.12),
+// //                           shadowColor: Colors.transparent,
+// //                           //make color or elevated button transparent
+// //                         ),
+// //                         onPressed: () async {
+// //                           print("Start Button Pressed");
+// //                           setState(() {
+// //                             receiving = true;
+// //                           });
+// //                           Navigator.push(
+// //                             context,
+// //                             MaterialPageRoute(
+// //                               builder: (context) => Report(),
+// //                             ),
+// //                           );
+// //                         },
+// //                         child: const Text("STOP")),
+// //                   ),
+// //                 ),
+// //               ),
+// //             ),
+// //           ],
+// //         ),
+// //       ),
+// //     );
+// //   }
+// // }
+// import 'dart:async';
+
+// import 'package:flutter/cupertino.dart';
+// import 'package:flutter/material.dart';
+// import 'package:railways1/bluetooth.dart';
+// import 'package:railways1/db.dart';
+// import 'package:railways1/reportscreen.dart';
+
+// class HomeScreen extends StatefulWidget {
+//   String address = '';
+//   HomeScreen(this.address);
+//   @override
+//   State<StatefulWidget> createState() {
+//     return _HomeScreenState();
+//   }
+// }
+
+// class _HomeScreenState extends State<HomeScreen> {
+//   final _formKey = GlobalKey<FormState>();
+
+//   final TextEditingController _name = TextEditingController();
+
+//   bool receiving = true;
+//   late List<int>
+//       receivedData; // startlistening() stores a list of three values coming from bluetooth: in three integers and returns three nos. as list
+//   // update the widgets using the list
+//   DatabaseHelper db = DatabaseHelper();
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Container(
+//         width: MediaQuery.of(context).size.width,
+//         height: MediaQuery.of(context).size.height,
+//         decoration: BoxDecoration(
+//           borderRadius: BorderRadius.circular(8),
+//           gradient: const LinearGradient(
+//             begin: Alignment.topRight,
+//             end: Alignment.bottomLeft,
+//             colors: [
+//               Color.fromARGB(255, 216, 77, 38),
+//               Color.fromARGB(0, 230, 2, 2)
+//             ],
+//           ),
+//         ),
+//         child: Column(
+//           children: [
+//             const SizedBox(
+//               height: 73,
+//             ),
+//             Image.asset(
+//               "assets/images/raillogo.png",
+//               width: 127,
+//               //width: 32,
+//             ),
+//             const SizedBox(
+//               height: 31,
+//             ),
+//             Expanded(
+//               child: Container(
+//                 width: 343,
+//                 decoration: BoxDecoration(
+//                   borderRadius: BorderRadius.circular(8),
+//                   color: const Color(0xccffffff),
+//                 ),
+//                 child: SingleChildScrollView(
+//                   child: Column(
+//                     crossAxisAlignment: CrossAxisAlignment.start,
+//                     children: [
+//                       const SizedBox(height: 48),
+//                       const Padding(
+//                         padding: EdgeInsets.only(left: 18),
+//                         child: Text(
+//                           "Sleeper Number:",
+//                           style: TextStyle(
+//                             fontSize: 20,
+//                             fontWeight: FontWeight.bold,
+//                             fontFamily: 'Urbanist',
+//                           ),
+//                         ),
+//                       ),
+//                       Padding(
+//                         padding: const EdgeInsets.only(left: 15, right: 15),
+//                         child: Container(
+//                           decoration: BoxDecoration(
+//                             borderRadius: BorderRadius.circular(10.0),
+//                             border: Border.all(),
+//                           ),
+//                           child: TextFormField(
+//                             controller: _name,
+//                             textAlign: TextAlign.left,
+//                             decoration: const InputDecoration(
+//                               hintText: '',
+//                               border: OutlineInputBorder(),
+//                             ),
+//                             validator: (value) {
+//                               if (value == null || value.isEmpty) {
+//                                 return 'Please enter a sleeper number';
+//                               }
+//                               return null;
+//                             },
+//                           ),
+//                         ),
+//                       ),
+//                       const SizedBox(height: 10),
+//                       Padding(
+//                         padding: const EdgeInsets.only(left: 10),
+//                         child: Center(
+//                           child: Container(
+//                             width: 140,
+//                             child: DecoratedBox(
+//                               decoration: BoxDecoration(
+//                                 gradient: const LinearGradient(colors: [
+//                                   Color.fromARGB(255, 234, 84, 38),
+//                                   Color.fromARGB(255, 241, 56, 36)
+//                                   //add more colors
+//                                 ]),
+//                                 borderRadius: BorderRadius.circular(5),
+//                               ),
+//                               child: ElevatedButton(
+//                                   style: ElevatedButton.styleFrom(
+//                                     backgroundColor: Colors.transparent,
+//                                     disabledForegroundColor:
+//                                         Colors.transparent.withOpacity(0.38),
+//                                     disabledBackgroundColor:
+//                                         Colors.transparent.withOpacity(0.12),
+//                                     shadowColor: Colors.transparent,
+//                                     //make color or elevated button transparent
+//                                   ),
+//                                   onPressed: () async {
+//                                     print("Start Button Pressed");
+//                                     List<int> values =
+//                                         Bluetooth.startListening();
+//                                     // startlistening() stores a list of three values coming from
+//                                     // bluetooth: in three integers and returns three nos. as list
+//                                     // update the widgets using the list
+//                                     receivedData.addAll(values);
+//                                     db.insertUserData(
+//                                         distance: values[0],
+//                                         gauge: values[1],
+//                                         elevation: values[2]);
+//                                     setState(() {
+//                                       receiving = true;
+//                                     });
+//                                     ScaffoldMessenger.of(context)
+//                                         .showSnackBar(SnackBar(
+//                                       content: Text('Machine reading started'),
+//                                     ));
+//                                   },
+//                                   child: const Text("START")),
+//                             ),
+//                           ),
+//                         ),
+//                       ),
+//                       const SizedBox(
+//                         height: 16,
+//                       ),
+//                       const Center(
+//                         child: Text(
+//                           "Distance :",
+//                           style: TextStyle(
+//                             fontSize: 14,
+//                             fontWeight: FontWeight.w700,
+//                           ),
+//                         ),
+//                       ),
+//                       Center(
+//                         child: Padding(
+//                           padding: const EdgeInsets.only(left: 10, right: 10),
+//                           child: Container(
+//                             height: 99,
+//                             color: CupertinoColors.systemGrey4,
+//                             child: ListView.builder(
+//                               itemCount: 10,
+//                               itemBuilder: (context, index) {
+//                                 return ListTile(
+//                                   title: Text("distance $index"),
+//                                 );
+//                               },
+//                             ),
+//                           ),
+//                         ),
+//                       ),
+//                       const SizedBox(
+//                         height: 16,
+//                       ),
+//                       const Center(
+//                         child: Text(
+//                           "Gauge :",
+//                           style: TextStyle(
+//                             fontSize: 14,
+//                             fontWeight: FontWeight.w700,
+//                           ),
+//                         ),
+//                       ),
+//                       Center(
+//                         child: Padding(
+//                           padding: const EdgeInsets.only(left: 15, right: 15),
+//                           child: Container(
+//                             height: 99,
+//                             color: CupertinoColors.systemGrey4,
+//                             child: ListView.builder(
+//                               itemCount: 10,
+//                               itemBuilder: (context, index) {
+//                                 return ListTile(
+//                                   title: Text("gauge $index"),
+//                                 );
+//                               },
+//                             ),
+//                           ),
+//                         ),
+//                       ),
+//                       const SizedBox(
+//                         height: 16,
+//                       ),
+//                       const Center(
+//                         child: Text(
+//                           "Elevation :",
+//                           style: TextStyle(
+//                             fontSize: 14,
+//                             fontWeight: FontWeight.w700,
+//                           ),
+//                         ),
+//                       ),
+//                       Center(
+//                         child: Padding(
+//                           padding: const EdgeInsets.only(left: 10, right: 10),
+//                           child: Container(
+//                             height: 99,
+//                             color: CupertinoColors.systemGrey4,
+//                             child: ListView.builder(
+//                               itemCount: 10,
+//                               itemBuilder: (context, index) {
+//                                 return ListTile(
+//                                   title: Text("elevation $index"),
+//                                 );
+//                               },
+//                             ),
+//                           ),
+//                         ),
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//               ),
+//             ),
+//             const SizedBox(height: 10),
+//             Padding(
+//               padding: const EdgeInsets.only(left: 10),
+//               child: Center(
+//                 child: Container(
+//                   width: 140,
+//                   child: DecoratedBox(
+//                     decoration: BoxDecoration(
+//                         gradient: const LinearGradient(colors: [
+//                           Color.fromARGB(255, 200, 10, 19),
+//                           Color.fromARGB(255, 249, 66, 66)
+//                           //add more colors
+//                         ]),
+//                         borderRadius: BorderRadius.circular(5),
+//                         boxShadow: const <BoxShadow>[
+//                           BoxShadow(
+//                               color: Color.fromRGBO(
+//                                   0, 0, 0, 0.57), //shadow for button
+//                               blurRadius: 5) //blur radius of shadow
+//                         ]),
+//                     child: ElevatedButton(
+//                         style: ElevatedButton.styleFrom(
+//                           backgroundColor: Colors.transparent,
+//                           disabledForegroundColor:
+//                               Colors.transparent.withOpacity(0.38),
+//                           disabledBackgroundColor:
+//                               Colors.transparent.withOpacity(0.12),
+//                           shadowColor: Colors.transparent,
+//                           //make color or elevated button transparent
+//                         ),
+//                         onPressed: () async {
+//                           print("Start Button Pressed");
+//                           setState(() {
+//                             receiving = true;
+//                           });
+//                           Navigator.push(
+//                             context,
+//                             MaterialPageRoute(
+//                               builder: (context) => Report(),
+//                             ),
+//                           );
+//                         },
+//                         child: const Text("STOP")),
+//                   ),
+//                 ),
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
@@ -21,10 +616,18 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _name = TextEditingController();
 
   bool receiving = true;
-  late List<int>
-      receivedData; // startlistening() stores a list of three values coming from bluetooth: in three integers and returns three nos. as list
-  // update the widgets using the list
+  List<int> receivedData = [
+    0,
+    0,
+    0
+  ]; // Initialize receivedData with default values
   DatabaseHelper db = DatabaseHelper();
+
+  @override
+  void initState() {
+    super.initState();
+    Bluetooth.connectToDevice(widget.address);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +652,8 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 73,
             ),
             Image.asset(
-              "assets/images/Indian-Railway.jpg",
-              width: double.infinity,
+              "assets/images/raillogo.png",
+              width: 127,
             ),
             const SizedBox(
               height: 31,
@@ -112,25 +715,26 @@ class _HomeScreenState extends State<HomeScreen> {
                                 gradient: const LinearGradient(colors: [
                                   Color.fromARGB(255, 234, 84, 38),
                                   Color.fromARGB(255, 241, 56, 36)
-                                  //add more colors
                                 ]),
                                 borderRadius: BorderRadius.circular(5),
                               ),
                               child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    primary: Colors.transparent,
-                                    onSurface: Colors.transparent,
+                                    backgroundColor: Colors.transparent,
+                                    disabledForegroundColor:
+                                        Colors.transparent.withOpacity(0.38),
+                                    disabledBackgroundColor:
+                                        Colors.transparent.withOpacity(0.12),
                                     shadowColor: Colors.transparent,
-                                    //make color or elevated button transparent
                                   ),
                                   onPressed: () async {
                                     print("Start Button Pressed");
+                                    await Bluetooth.connectToDevice(
+                                        widget.address);
                                     List<int> values =
                                         Bluetooth.startListening();
-                                    // startlistening() stores a list of three values coming from
-                                    // bluetooth: in three integers and returns three nos. as list
-                                    // update the widgets using the list
-                                    receivedData.addAll(values);
+                                    receivedData =
+                                        values; // Update receivedData with new values
                                     db.insertUserData(
                                         distance: values[0],
                                         gauge: values[1],
@@ -138,6 +742,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                     setState(() {
                                       receiving = true;
                                     });
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(SnackBar(
+                                      content: Text('Machine reading started'),
+                                    ));
                                   },
                                   child: const Text("START")),
                             ),
@@ -163,10 +771,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: 99,
                             color: CupertinoColors.systemGrey4,
                             child: ListView.builder(
-                              itemCount: 10,
+                              itemCount: receivedData.length,
                               itemBuilder: (context, index) {
                                 return ListTile(
-                                  title: Text("distance $index"),
+                                  title:
+                                      Text("Distance: ${receivedData[index]}"),
                                 );
                               },
                             ),
@@ -192,10 +801,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: 99,
                             color: CupertinoColors.systemGrey4,
                             child: ListView.builder(
-                              itemCount: 10,
+                              itemCount: receivedData.length,
                               itemBuilder: (context, index) {
                                 return ListTile(
-                                  title: Text("gauge $index"),
+                                  title: Text("Gauge: ${receivedData[index]}"),
                                 );
                               },
                             ),
@@ -221,10 +830,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: 99,
                             color: CupertinoColors.systemGrey4,
                             child: ListView.builder(
-                              itemCount: 10,
+                              itemCount: receivedData.length,
                               itemBuilder: (context, index) {
                                 return ListTile(
-                                  title: Text("elevation $index"),
+                                  title:
+                                      Text("Elevation: ${receivedData[index]}"),
                                 );
                               },
                             ),
@@ -247,24 +857,24 @@ class _HomeScreenState extends State<HomeScreen> {
                         gradient: const LinearGradient(colors: [
                           Color.fromARGB(255, 200, 10, 19),
                           Color.fromARGB(255, 249, 66, 66)
-                          //add more colors
                         ]),
                         borderRadius: BorderRadius.circular(5),
                         boxShadow: const <BoxShadow>[
                           BoxShadow(
-                              color: Color.fromRGBO(
-                                  0, 0, 0, 0.57), //shadow for button
-                              blurRadius: 5) //blur radius of shadow
+                              color: Color.fromRGBO(0, 0, 0, 0.57),
+                              blurRadius: 5)
                         ]),
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.transparent,
-                          onSurface: Colors.transparent,
+                          backgroundColor: Colors.transparent,
+                          disabledForegroundColor:
+                              Colors.transparent.withOpacity(0.38),
+                          disabledBackgroundColor:
+                              Colors.transparent.withOpacity(0.12),
                           shadowColor: Colors.transparent,
-                          //make color or elevated button transparent
                         ),
                         onPressed: () async {
-                          print("Start Button Pressed");
+                          print("Stop Button Pressed");
                           setState(() {
                             receiving = true;
                           });
